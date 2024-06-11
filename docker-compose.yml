@@ -1,0 +1,28 @@
+version: "3"
+services:
+  mysql:
+    image: mysql:5.7.19
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    container_name: mysql
+    ports:
+      - 3306:3306
+    volumes:
+      - /data/software/mysql/conf/:/etc/mysql/conf.d
+      - /data/software/mysql/data:/var/lib/mysql
+      - /data/software/mysql/log/:/var/log/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+      MYSQL_DATABASE: test1
+      MYSQL_USER: chenbin
+      MYSQL_PASSWORD: 123456
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8082:8080
+    links:
+      - mysql
+    environment:
+      - VIRTUAL_HOST=adminer.lmm.art   
