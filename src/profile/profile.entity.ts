@@ -13,7 +13,6 @@ export class Profile {
   phone: string;
   @Column()
   address:string;
-
   @OneToOne(() => User)
   @JoinColumn()
   user: User;

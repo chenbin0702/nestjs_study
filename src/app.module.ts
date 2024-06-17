@@ -11,6 +11,8 @@ import { RoleController } from './role/role.controller';
 import { RoleModule } from './role/role.module';
 import { Role } from './role/role.entity';
 import { Logs } from './logs/logs.entity';
+import { AuthModule } from './auth/auth.module';
+const entitiesDir=process.env.NODE_ENV==="test"?[__dirname+"/**/*.entity.ts"]:[__dirname+"/**/*.entity{.js,.ts}"]
 @Module({
   imports: [ConfigModule.forRoot({
     isGlobal: true,
@@ -26,14 +28,15 @@ import { Logs } from './logs/logs.entity';
       username:configService.get('db.username'),
       password:configService.get('db.password'),
       database:configService.get('db.database'),
-      entities:[User,Profile,Role,Logs],
+      entities:entitiesDir,
       synchronize:true,
-      logging:['error']
+      logging:process.env.NODE_ENV==="development"?true:false
     } as TypeOrmModuleOptions)
   }),
   UsersModule,
   ProfileModule,
-  RoleModule],
+  RoleModule,
+  AuthModule],
   controllers: [ProfileController, RoleController],
   providers: [],
   
