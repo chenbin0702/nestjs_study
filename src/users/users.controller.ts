@@ -1,10 +1,12 @@
-import { Body, Controller, Get, HttpException, Param, Post, Query } from '@nestjs/common';
+import { Body, Controller, Get, HttpException, Param, Post, Query, UseFilters } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { get } from 'http';
 import { User } from './users.entity';
 import { getUserDto } from 'src/dto/User.dto';
+import { TypeormFilter } from 'src/filters/typeorm.filter';
 
 @Controller('user')
+@UseFilters(new TypeormFilter())
 export class UsersController {
   constructor(private usersService : UsersService) {}
   @Post('/add')
